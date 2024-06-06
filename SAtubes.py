@@ -1,6 +1,7 @@
 import time
 import random
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 def DP(price, n):
     val = [0 for _ in range(n + 1)]
@@ -65,11 +66,13 @@ if __name__ == "__main__":
         endBF = time.perf_counter()
         bf_times.append(endBF - startBF)
 
-    
     print(f"Berat daging: {BeratDaging}")
     print(f"DP - Max value: {max_valueDP}, Selected cuts: {selected_cutsDP}, Time: {endDP - startDP:.6f} seconds")
     print(f"BF - Max value: {max_valueBF}, Selected cuts: {selected_cutsBF}, Time: {endBF - startBF:.6f} seconds")
     print()
+
+    def format_func(value, tick_number):
+        return f'{value:.6f}'
 
     plt.figure(figsize=(10, 5))
     plt.plot(BeratDagings, dp_times, label="Dynamic Programming", marker='o')
@@ -80,4 +83,5 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True)
     plt.xticks(BeratDagings)
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(format_func))
     plt.show()
